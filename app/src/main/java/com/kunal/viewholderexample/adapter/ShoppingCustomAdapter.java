@@ -97,12 +97,18 @@ public class ShoppingCustomAdapter extends ArrayAdapter<ShoppingItem> {
 
         final ShoppingItem shoppingItem = getItem(position);
 
-        viewHolder.itemTitleTextView.setText(shoppingItem.getItemName());
+
+        if(shoppingItem.isItemInCart())
+        {
+            viewHolder.itemTitleTextView.setText("In Cart");
+        }
+        else
+        {
+            viewHolder.itemTitleTextView.setText(shoppingItem.getItemName());
+        }
 
         viewHolder.addItemButton.setText(shoppingItem.getItemButtonText());
         viewHolder.addItemButton.setBackgroundColor(shoppingItem.getItemButtonColor());
-
-        Log.e("ItemColor", String.valueOf(shoppingItem.getItemButtonColor()));
 
         viewHolder.addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +116,7 @@ public class ShoppingCustomAdapter extends ArrayAdapter<ShoppingItem> {
                 //viewHolder.itemTitleTextView.setText("CLICKED");
                 shoppingItem.setItemButtonText("Added");
                 shoppingItem.setItemButtonColor(Color.parseColor("#2B8250"));
+                shoppingItem.setIsItemInCart(true);
                 notifyDataSetChanged();
                 //viewHolder.addItemButton.setBackgroundColor(Color.parseColor("#000000"));
             }
